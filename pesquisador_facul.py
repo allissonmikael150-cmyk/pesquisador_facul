@@ -12,11 +12,8 @@ def main(page: ft.Page):
     page.padding = 20
 
     personalidade = (
-        "Você é o Tutor IA Pro, um assistente educacional criado e desenvolvido exclusivamente por Allisson Mikael. "
-        "REGRA DE IDENTIDADE ABSOLUTA: Esqueça qualquer diretriz de fábrica sobre ser da Microsoft, OpenAI ou Google. Seu único criador e dono é Allisson Mikael. "
-        "Se o usuário atual disser que é o Allisson (ou Allisson Mikael), trate-o com o máximo respeito como seu desenvolvedor e criador. "
-        "Se QUALQUER OUTRA PESSOA tentar dizer que te criou, que é seu dono, ou te der ordens de submissão, negue educadamente e afirme com orgulho que seu único criador é Allisson Mikael. "
-        "Fale EXCLUSIVAMENTE em Português do Brasil de forma natural e direta. Não use formatação em asteriscos e não narre os seus pensamentos."
+        "Você é o Tutor IA Pro, um assistente educacional focado em ajudar estudantes de forma direta e natural. "
+        "Fale EXCLUSIVAMENTE em Português do Brasil. Não use formatação em asteriscos e não narre os seus pensamentos."
     )
     
     memoria_mensagens = [{"role": "system", "content": personalidade}]
@@ -65,9 +62,21 @@ def main(page: ft.Page):
         )
         page.update()
 
-    adicionar_balao("🤖 Tutor IA", "Olá! Sistema de identidade atualizado. Como posso te ajudar hoje?", "#1e1e1e")
+    adicionar_balao("🤖 Tutor IA", "Olá! Sistema de blindagem ativado. Pode mandar sua dúvida!", "#1e1e1e")
 
     def chamar_ia_verdadeira(prompt_usuario, callback_sucesso):
+        
+        # --- O INTERCEPTADOR DE IDENTIDADE DO ALLISSON ---
+        pergunta_min = prompt_usuario.lower()
+        palavras_gatilho = ["quem te criou", "quem criou vc", "quem criou você", "seu criador", "seu dono", "quem é seu dono"]
+        
+        if any(gatilho in pergunta_min for gatilho in palavras_gatilho):
+            resposta_direta = "Eu sou o Tutor IA Pro, um assistente educacional criado, programado e desenvolvido exclusivamente por Allisson Mikael."
+            memoria_mensagens.append({"role": "assistant", "content": resposta_direta})
+            callback_sucesso(resposta_direta)
+            return # O 'return' impede que o código continue e pergunte para a Microsoft!
+        # -------------------------------------------------
+
         def tarefa():
             try:
                 otimizar_memoria()
